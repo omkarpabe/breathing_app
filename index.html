@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wim Hof guided breathing exercise app with customizable rounds, retention timer, and session tracking.">
+  <meta name="theme-color" content="#030810">
+  <title>Wim Hof Breathing · Guided Breathwork</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄️</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Particles -->
+  <div class="particles" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">❄</div>
+      <span class="brand-text">Breathwork</span>
+    </div>
+    <span class="status-badge ready" id="cycleHeader">READY</span>
+  </header>
+
+  <!-- Phase Display -->
+  <div class="phase-section">
+    <div class="phase-text" id="phaseText">TAP THE ORB TO BEGIN</div>
+    <div class="phase-subtext" id="phaseSubtext">Configure your session below</div>
+  </div>
+
+  <!-- Breathing Orb -->
+  <div class="orb-wrap" id="orbWrap" onclick="handleOrbClick()" role="button" tabindex="0" aria-label="Start breathing session">
+    <div class="ring ring-1" aria-hidden="true"></div>
+    <div class="ring ring-2" aria-hidden="true"></div>
+    <div class="ring ring-3" aria-hidden="true"></div>
+    <div class="orb" id="orb">
+      <div class="breath-count" id="breathCount">30</div>
+      <div class="breath-label">BREATHS</div>
+    </div>
+  </div>
+
+  <!-- Retention Timer Display -->
+  <div class="retention-display" id="retDisplay" aria-live="polite">
+    <div class="ret-time" id="retTimer">0:00</div>
+    <div class="ret-label">RETENTION</div>
+  </div>
+
+  <!-- Recovery Countdown -->
+  <div class="recovery-count" id="recoveryCount" aria-live="polite"></div>
+
+  <!-- Progress Bar -->
+  <div class="progress-wrap" id="progressWrap" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+  </div>
+
+  <!-- Session Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" id="statRounds">0</div>
+      <div class="stat-label">ROUNDS</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="statBreaths">0</div>
+      <div class="stat-label">BREATHS</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="statBest">0:00</div>
+      <div class="stat-label">BEST HOLD</div>
+    </div>
+  </div>
+
+  <!-- Controls Grid -->
+  <div class="controls">
+    <!-- Breaths per round -->
+    <div class="ctrl-group">
+      <div class="ctrl-label">Breaths / Round</div>
+      <div class="ctrl-row">
+        <button class="ctrl-btn" onclick="changeBreaths(-5)" aria-label="Decrease breaths">−</button>
+        <div>
+          <div class="ctrl-value" id="breathSetting">30</div>
+          <div class="ctrl-unit">breaths</div>
+        </div>
+        <button class="ctrl-btn" onclick="changeBreaths(5)" aria-label="Increase breaths">+</button>
+      </div>
+    </div>
+
+    <!-- Rounds -->
+    <div class="ctrl-group">
+      <div class="ctrl-label">Rounds</div>
+      <div class="ctrl-row">
+        <button class="ctrl-btn" onclick="changeCycles(-1)" aria-label="Decrease rounds">−</button>
+        <div>
+          <div class="ctrl-value" id="cycleSetting">3</div>
+          <div class="ctrl-unit">rounds</div>
+        </div>
+        <button class="ctrl-btn" onclick="changeCycles(1)" aria-label="Increase rounds">+</button>
+      </div>
+    </div>
+
+    <!-- Retention Time -->
+    <div class="ctrl-group full-width">
+      <div class="ctrl-label">Retention Time</div>
+      <div class="ret-chips">
+        <button class="ret-chip active" data-val="30" onclick="selectRetention(this)">30 SEC</button>
+        <button class="ret-chip" data-val="60" onclick="selectRetention(this)">1 MIN</button>
+        <button class="ret-chip" data-val="90" onclick="selectRetention(this)">1:30 MIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions">
+    <button class="btn-main" id="startBtn" onclick="startSession()">BEGIN SESSION</button>
+    <button class="btn-secondary" onclick="resetSession()">RESET</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Session Log -->
+  <div class="log-section">
+    <div class="log-header">
+      <div class="log-title">Session Log</div>
+      <button class="log-clear" onclick="clearLog()">CLEAR</button>
+    </div>
+    <div class="log-list" id="logList">
+      <div class="log-empty">No rounds completed yet — begin a session to track your progress.</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Press <strong>SPACE</strong> to start · <strong>ESC</strong> to reset · <strong>M</strong> to toggle sound
+  </div>
+
+  <!-- Sound Toggle -->
+  <button class="sound-toggle" id="soundToggle" onclick="toggleSound()" aria-label="Toggle sound">🔊</button>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="alert"></div>
+
+  <!-- Audio Elements -->
+  <audio id="audio30" preload="auto" src="audio/30sec_retentation.mp3"></audio>
+  <audio id="audio60" preload="auto" src="audio/1_minute_retentation.mp3"></audio>
+  <audio id="audio90" preload="auto" src="audio/1min30sec_retentation.mp3"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
