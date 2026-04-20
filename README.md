@@ -2,6 +2,8 @@
 
 A premium, high-performance web application designed for guided Wim Hof breathing exercises. This app features a responsive dark-themed interface, real-time audio synchronization, and comprehensive session tracking to elevate your daily practice.
 
+Visit the app: [Live Demo](https://breathingwork.netlify.app)
+
 ![Wim Hof Breathing App](https://img.shields.io/badge/Status-Premium-blue?style=for-the-badge)
 ![Tech Stack](https://img.shields.io/badge/Stack-HTML%20%7C%20CSS%20%7C%20JS-brightgreen?style=for-the-badge)
 
